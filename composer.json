@@ -1,0 +1,26 @@
+{
+    "name": "Kata de App de Basket",
+    "license": "proprietary",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Juan Gabriel Rodríguez Carrión",
+            "email": "juan.rodriguez@pccomponentes.com",
+            "homepage": "https://www.jlabstudio.com/webgl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Kata\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.1",
+        "phpunit/phpunit": "6.5.5",
+        "symfony/console": "4.0.3",
+        "beberlei/assert": "^2.8"
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
