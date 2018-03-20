@@ -2,17 +2,16 @@
 require_once(__DIR__ . '/../vendor/autoload.php');
 
 use Symfony\Component\Console\Application;
-use Kata\Ejemplo\IntSumApp;
-use Kata\Ejemplo\IntSum;
-use Kata\Ejemplo\FileRepo;
+use Kata\Persistence\FileRepository;
+use Kata\CreatePlayer\CreatePlayer;
+use Kata\CreatePlayer\CreatePlayerCommand;
+$pathFile =__DIR__ . '/../src/Ejemplo/data.txt';
 
 $application = new Application();
 
-$intSumApp = new IntSumApp(
-    new IntSum(
-        new FileRepo(__DIR__ . '/../src/Ejemplo/data.txt')
-    )
-);
+$fileRepository = new FileRepository($pathFile);
+$createPlayer = new CreatePlayer($fileRepository);
+$createPlayerCommand = new CreatePlayerCommand($createPlayer);
 
-$application->addCommands([$intSumApp]);
+$application->addCommands([$createPlayerCommand]);
 $application->run();

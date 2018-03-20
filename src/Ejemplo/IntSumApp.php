@@ -23,12 +23,12 @@ class IntSumApp extends Command
             ->setDescription('Sumar dos números')
             ->setHelp('Este comando suma dos números.')
             ->addArgument(
-                'op1',
+                'dorsal',
                 InputArgument::REQUIRED,
                 'Operador 1'
             )
             ->addArgument(
-                'op2',
+                'name',
                 InputArgument::REQUIRED,
                 'Operador 2'
             );
@@ -37,8 +37,8 @@ class IntSumApp extends Command
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $result = $this->intSum->execute(
-            $input->getArgument('op1'),
-            $input->getArgument('op2')
+            $input->getArgument('dorsal'),
+            $input->getArgument('name')
         );
 
         $output->write('<comment>El resultado de la suma es: </comment>');
