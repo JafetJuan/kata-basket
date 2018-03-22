@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jafet
- * Date: 20/03/18
- * Time: 12:11
- */
-
-namespace Kata\Model;
-
+namespace Kata\Domain\Model\Player;
 
 use Assert\Assertion;
+use Kata\Domain\Model\Role\Role;
 
 class Player
 {
@@ -23,17 +16,17 @@ class Player
 
     /**
      * Player constructor.
-     *
      * @param $dorsal
      * @param $name
      * @param $rate
-     * @param $role
+     * @param Role $role
+     * @throws \Assert\AssertionFailedException
      */
     public function __construct($dorsal, $name, $rate,Role $role)
     {
-        Assertion::integer($dorsal,"El dorsal debe ser un numero");
+        Assertion::notBlank($dorsal,"El dorsal no debe ser blanco");
         Assertion::string($name,"El name debe ser un String");
-        Assertion::integer($rate,"El rate debe ser un numero");
+        Assertion::notBlank($rate,"El rate no debe ser blanco");
         Assertion::range($rate, self::MIN_RATE, self::MAX_RATE, "La puntuación debe ser entre 0 y 100");
         $this->dorsal = $dorsal;
         $this->name = $name;
@@ -77,7 +70,7 @@ class Player
      *
      * @return mixed
      */
-    public function getRole()
+    public function getRole(): Role
     {
         return $this->role;
     }

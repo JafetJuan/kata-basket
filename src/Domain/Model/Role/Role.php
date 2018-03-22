@@ -6,7 +6,7 @@
  * Time: 12:21
  */
 
-namespace Kata\Model;
+namespace Kata\Domain\Model\Role;
 
 use Assert\Assertion;
 

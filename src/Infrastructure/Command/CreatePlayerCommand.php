@@ -1,17 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: jafet
- * Date: 20/03/18
- * Time: 13:15
- */
+namespace Kata\Infrastructure\Command;
 
-namespace Kata\CreatePlayer;
-
+use Kata\Application\Player\CreatePlayer\CreatePlayer;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use \Kata\Application\Player\CreatePlayer\CreatePlayerCommand as CreatePlayerCommandApplication;
 
 class CreatePlayerCommand extends Command
 {
@@ -20,15 +15,15 @@ class CreatePlayerCommand extends Command
 
     public function __construct(CreatePlayer $createPlayer)
     {
-        $this->createPlayer =$createPlayer;
+        $this->createPlayer = $createPlayer;
         parent::__construct();
     }
 
     protected function configure(): void
     {
         $this
-            ->setName('insertPlayer')
-            ->setDescription('insertar un jugador')
+            ->setName('player:insertPlayer')
+            ->setDescription('Insertar un jugador')
             ->setHelp('')
             ->addArgument(
                 'dorsal',
@@ -55,17 +50,25 @@ class CreatePlayerCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $result = $this->createPlayer->execute(
-            $input->getArgument('dorsal'),
-            $input->getArgument('name'),
-            $input->getArgument('rate'),
-            $input->getArgument('role')
+        try {
 
-        );
-        var_dump(json_encode($result->getDorsal(), true));
-        /*$output->write('<comment>El jugador ha sido insertado :</comment>');
-        $output->writeln("<info>{json_encode($result)}</info>");
-*/
+            $result = $this->createPlayer->execute(
+                new CreatePlayerCommandApplication(
+                    $input->getArgument('dorsal'),
+                    $input->getArgument('name'),
+                    $input->getArgument('rate'),
+                    $input->getArgument('role')
+                )
+            );
+
+            $output->write('<comment>El jugador ha sido insertado :</comment>');
+            $output->writeln("<info>".json_encode($result)."</info>");
+        } catch (AlredyRegisteredException $e) {
+            $output->writeln("<error>El jugador ya existe'</error>");
+        }
+
+
+
     }
 
 }
